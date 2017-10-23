@@ -80,7 +80,7 @@
             fetch(bucket).then(response => {
                 return response.text();
             }).then(text => {
-                listingContents = (
+                let listingContents = (
                     new DOMParser()
                 ).parseFromString(
                     // Else won't parse properly
@@ -89,9 +89,9 @@
                 ).getElementsByTagName('Contents');
 
                 for (let i = listingContents.length - 1; i >= 0; i--) {
-                    content = listingContents[i]
-                    tr = document.createElement('tr');
-                    the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
+                    let content = listingContents[i]
+                    let tr = document.createElement('tr');
+                    let the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
 
                     if (the_key[the_key.length - 1] != '/') {  // Do not want 'folders'
                         for (let j = attributes.length - 1; j >= 0; j--) {
