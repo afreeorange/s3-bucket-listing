@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<!--
+            _    _ _           _ _   _    _ _   _
+  _ __ _  _| |__| (_)__   _ _ (_) |_| |_ (_) | (_)___
+ | '_ \ || | '_ \ | / _|_| ' \| | / / ' \| | |_| / _ \
+ | .__/\_,_|_.__/_|_\__(_)_||_|_|_\_\_||_|_|_(_)_\___/
+ |_|
+-->
+
+<html>
+    <head>
+        <title>public.nikhil.io</title>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Codystar|Fira+Mono" rel="stylesheet">
+        <style type="text/css">
+            body {
+                background-color: rgb(255, 233, 78);
+                margin: 0;
+                padding: 0;
+            }
+            a {
+                color: #ff3300;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            a:hover {
+                color: red;
+            }
+            h1 {
+                color: #ff9900;
+                font-family: "Codystar", arial, helvetica, sans-serif;
+                font-size: 3.5em;
+                font-weight: normal;
+                margin: 0 0 20px 0;
+                padding: 15px;
+            }
+            h1 span {
+                display: inline-block;
+                margin: 0 10px;
+            }
+            table {
+                border-collapse: collapse;
+                font-family: "Fira Mono";
+                width: 100%;
+            }
+            table tr {
+                border-bottom: 1px dotted #ff9900;
+            }
+            table tr:last-child {
+                border-bottom: none;
+            }
+            table tr td {
+                padding: 5px 30px 5px 15px;
+                color: #333;
+            }
+            table tr td:nth-child(1) {
+                background-color: #ffee58;
+            }
+            table tr td:nth-child(2) {
+                width: 250px;
+            }
+            table tr td:nth-child(3) {
+                width: 115px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>public<span>~</span>nikhil<span>~</span>io</h1>
+        <div>
+            <table>
+                <tbody></tbody>
+            </table>
+        </div>
+        <script type="text/javascript">
+            const bucket = 'https://s3.amazonaws.com/public.nikhil.io';
+            const attributes = ['Size', 'LastModified', 'Key'];
+            const tbody = document.getElementsByTagName('tbody')[0];
+
+            fetch(bucket).then(response => {
+                return response.text();
+            }).then(text => {
+                listingContents = (
+                    new DOMParser()
+                ).parseFromString(
+                    // Else won't parse properly
+                    text.replace('<?xml version="1.0" encoding="UTF-8"?>\n', ''),
+                    'text/xml'
+                ).getElementsByTagName('Contents');
+
+                for (let i = listingContents.length - 1; i >= 0; i--) {
+                    content = listingContents[i]
+                    tr = document.createElement('tr');
+                    the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
+
+                    if (the_key[the_key.length - 1] != '/') {  // Do not want 'folders'
+                        for (let j = attributes.length - 1; j >= 0; j--) {
+                            let val = content.getElementsByTagName(attributes[j])[0].childNodes[0].nodeValue;
+                            let td = document.createElement('td');
+
+                            if (attributes[j] == 'ETag') {
+                                val = val.replace(/"/g, '');
+                            }
+
+                            if (attributes[j] == 'Key') {
+                                let a = document.createElement('a');
+                                a.appendChild(document.createTextNode(val));
+                                a.setAttribute('href', bucket + '/' + val);
+                                td.appendChild(a);
+                            } else {
+                                td.appendChild(document.createTextNode(val));
+                            }
+
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
