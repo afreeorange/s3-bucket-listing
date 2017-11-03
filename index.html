@@ -21,23 +21,27 @@
             }
             a {
                 color: #ff3300;
-                font-weight: bold;
                 text-decoration: none;
+                padding: 3px;
             }
             a:hover {
-                color: red;
+                background: red;
+                border-radius: 5px;
+                color: white;
             }
             h1 {
                 color: red;
                 font-family: "Bungee Outline", arial, helvetica, sans-serif;
                 font-size: 3.5em;
                 font-weight: normal;
-                margin: 0 0 20px 0;
-                padding: 15px;
+                margin: 0 0 10px 10px;
+                padding: 5px;
+                line-height: 1;
             }
-            h1 span {
-                display: inline-block;
-                margin: 0 10px;
+            h1 a:hover {
+                color: red;
+                font-weight: bold;
+                background: none;
             }
             table {
                 border-collapse: collapse;
@@ -60,15 +64,16 @@
             table tr td:nth-child(3) {
                 width: 115px;
             }
+            table a {
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
-        <h1>public.nikhil.io</h1>
-        <div>
-            <table>
-                <tbody></tbody>
-            </table>
-        </div>
+        <h1>public.<a href="https://nikhil.io">nikhil.io</a></h1>
+        <table>
+            <tbody></tbody>
+        </table>
         <script type="text/javascript">
             const bucket = 'https://s3.amazonaws.com/public.nikhil.io';
             const attributes = ['Size', 'LastModified', 'Key'];
@@ -79,8 +84,8 @@
             }).then(text => {
                 let listingContents = (
                     new DOMParser()
+                // I am not proud of this.
                 ).parseFromString(
-                    // Else won't parse properly
                     text.replace('<?xml version="1.0" encoding="UTF-8"?>\n', ''),
                     'text/xml'
                 ).getElementsByTagName('Contents');
@@ -102,7 +107,7 @@
                             if (attributes[j] == 'Key') {
                                 let a = document.createElement('a');
                                 a.appendChild(document.createTextNode(val));
-                                a.setAttribute('href', bucket + '/' + val);
+                                a.setAttribute('href', '/' + val);
                                 td.appendChild(a);
                             } else {
                                 td.appendChild(document.createTextNode(val));
