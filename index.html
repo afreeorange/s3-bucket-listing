@@ -67,7 +67,29 @@
             table a {
                 font-weight: bold;
             }
+            @media (max-width: 768px) {
+                body {
+                    background: #111;
+                }
+                table tr td:nth-child(2) {
+                    color: white;
+                }
+                table tr td:nth-child(3) {
+                    display: none;
+                }
+            }
+            @media (max-width: 576px) {
+                h1 {
+                    font-size: 2.5em;
+                }
+                table tr td:nth-child(2),
+                table tr td:nth-child(3) {
+                    display: none;
+                }
+            }
         </style>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88882746-2"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-88882746-2');</script>
     </head>
     <body>
         <h1>public.<a href="https://nikhil.io">nikhil.io</a></h1>
