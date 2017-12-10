@@ -12,6 +12,7 @@
     <head>
         <title>public.nikhil.io</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Bungee+Outline" rel="stylesheet">
         <style type="text/css">
             body {
@@ -67,7 +68,7 @@
             table a {
                 font-weight: bold;
             }
-            @media (max-width: 768px) {
+            @media screen and (max-width: 768px) {
                 body {
                     background: #111;
                 }
@@ -78,9 +79,19 @@
                     display: none;
                 }
             }
-            @media (max-width: 576px) {
+            @media screen and (max-width: 576px) {
                 h1 {
-                    font-size: 2.5em;
+                    font-size: 2.125em;
+                    color: #39ff14;
+                }
+                h1 a {
+                    color: #39ff14;
+                }
+                table tr {
+                    border-bottom: 1px dotted #666;
+                }
+                table tr td {
+                    padding: 5px;
                 }
                 table tr td:nth-child(2),
                 table tr td:nth-child(3) {
