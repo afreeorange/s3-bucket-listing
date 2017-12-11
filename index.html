@@ -68,6 +68,15 @@
             table a {
                 font-weight: bold;
             }
+            #no-fetch,
+            #error {
+                padding: 20px;
+                font-family: "Fira Mono";
+                color: red;
+            }
+            .hide {
+                display: none;
+            }
             @media screen and (max-width: 768px) {
                 body {
                     background: #111;
@@ -104,6 +113,12 @@
     </head>
     <body>
         <h1>public.<a href="https://nikhil.io">nikhil.io</a></h1>
+        <div id="no-fetch" class="hide">
+            Uh oh&hellip; looks like you're using an old browser :/
+        </div>
+        <div id="error" class="hide">
+            Uh oh&hellip; something went wrong :/
+        </div>
         <table>
             <tbody></tbody>
         </table>
@@ -112,46 +127,58 @@
             const attributes = ['Size', 'LastModified', 'Key'];
             const tbody = document.getElementsByTagName('tbody')[0];
 
-            fetch(bucket).then(response => {
-                return response.text();
-            }).then(text => {
-                let listingContents = (
-                    new DOMParser()
-                // I am not proud of this.
-                ).parseFromString(
-                    text.replace('<?xml version="1.0" encoding="UTF-8"?>\n', ''),
-                    'text/xml'
-                ).getElementsByTagName('Contents');
+            window.onload = function() {
+                if (!('fetch' in window)) {
+                    console.error('Browser does not support fetch :(');
+                    document.getElementById('no-fetch').style.display = 'block';
+                    return;
+                } else {
+                    fetch(bucket).then(function(response) {
+                        return response.text();
+                    }).then(function(text) {
+                        let listingContents = (
+                            new DOMParser()
+                        // I am not proud of this.
+                        ).parseFromString(
+                            text.replace('<?xml version="1.0" encoding="UTF-8"?>\n', ''),
+                            'text/xml'
+                        ).getElementsByTagName('Contents');
 
-                for (let i = listingContents.length - 1; i >= 0; i--) {
-                    let content = listingContents[i]
-                    let tr = document.createElement('tr');
-                    let the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
+                        for (let i = listingContents.length - 1; i >= 0; i--) {
+                            let content = listingContents[i]
+                            let tr = document.createElement('tr');
+                            let the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
 
-                    if (the_key[the_key.length - 1] != '/') {  // Do not want 'folders'
-                        for (let j = attributes.length - 1; j >= 0; j--) {
-                            let val = content.getElementsByTagName(attributes[j])[0].childNodes[0].nodeValue;
-                            let td = document.createElement('td');
+                            if (the_key[the_key.length - 1] != '/') {  // Do not want 'folders'
+                                for (let j = attributes.length - 1; j >= 0; j--) {
+                                    let val = content.getElementsByTagName(attributes[j])[0].childNodes[0].nodeValue;
+                                    let td = document.createElement('td');
 
-                            if (attributes[j] == 'ETag') {
-                                val = val.replace(/"/g, '');
+                                    if (attributes[j] == 'ETag') {
+                                        val = val.replace(/"/g, '');
+                                    }
+
+                                    if (attributes[j] == 'Key') {
+                                        let a = document.createElement('a');
+                                        a.appendChild(document.createTextNode(val));
+                                        a.setAttribute('href', '/' + val);
+                                        td.appendChild(a);
+                                    } else {
+                                        td.appendChild(document.createTextNode(val));
+                                    }
+
+                                    tr.appendChild(td);
+                                }
+                                tbody.appendChild(tr);
                             }
+                        } // End for
 
-                            if (attributes[j] == 'Key') {
-                                let a = document.createElement('a');
-                                a.appendChild(document.createTextNode(val));
-                                a.setAttribute('href', '/' + val);
-                                td.appendChild(a);
-                            } else {
-                                td.appendChild(document.createTextNode(val));
-                            }
-
-                            tr.appendChild(td);
-                        }
-                        tbody.appendChild(tr);
-                    }
+                    }).catch(function(error) {
+                        console.error('Something awful happened: ' + error);
+                        document.getElementById('error').style.display = 'block';
+                    }); // End fetch
                 }
-            });
+            }
         </script>
     </body>
 </html>
