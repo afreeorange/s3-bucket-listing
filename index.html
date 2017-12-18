@@ -123,13 +123,28 @@
             <tbody></tbody>
         </table>
         <script type="text/javascript">
+            const humanBytes = function(bytes) {
+                let sizes = [
+                    'bytes',
+                    'KiB',
+                    'MiB',
+                    'GiB',
+                    'TiB'
+                ];
+                if (bytes == 0) {
+                    return 0;
+                }
+                let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+                return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+            };
+
             const bucket = 'https://s3.amazonaws.com/public.nikhil.io';
             const attributes = ['Size', 'LastModified', 'Key'];
             const tbody = document.getElementsByTagName('tbody')[0];
 
             window.onload = function() {
                 if (!('fetch' in window)) {
-                    console.error('Browser does not support fetch :(');
+                    console.error('No fetch!');
                     document.getElementById('no-fetch').style.display = 'block';
                     return;
                 } else {
@@ -163,7 +178,11 @@
                                         a.appendChild(document.createTextNode(val));
                                         a.setAttribute('href', '/' + val);
                                         td.appendChild(a);
-                                    } else {
+                                    }
+                                    else if (attributes[j] == 'Size') {
+                                        td.appendChild(document.createTextNode(humanBytes(val)));
+                                    }
+                                    else {
                                         td.appendChild(document.createTextNode(val));
                                     }
 
@@ -174,7 +193,7 @@
                         } // End for
 
                     }).catch(function(error) {
-                        console.error('Something awful happened: ' + error);
+                        console.error('Error: ' + error);
                         document.getElementById('error').style.display = 'block';
                     }); // End fetch
                 }
