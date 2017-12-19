@@ -88,13 +88,24 @@
                     display: none;
                 }
             }
-            @media screen and (max-width: 576px) {
+            @media screen and (max-width: 605px) {
                 h1 {
                     font-size: 2.125em;
                     color: #39ff14;
+                    text-align: center;
                 }
                 h1 a {
                     color: #39ff14;
+                }
+                a {
+                    color: #39ff14;
+                }
+                a:hover {
+                    color: black;
+                    background: #39ff14;
+                }
+                table {
+                    font-size: 0.85em;
                 }
                 table tr {
                     border-bottom: 1px dotted #666;
@@ -113,91 +124,91 @@
     </head>
     <body>
         <h1>public.<a href="https://nikhil.io">nikhil.io</a></h1>
-        <div id="no-fetch" class="hide">
+        <p id="no-fetch" class="hide">
             Uh oh&hellip; looks like you're using an old browser :/
-        </div>
-        <div id="error" class="hide">
+        </p>
+        <p id="error" class="hide">
             Uh oh&hellip; something went wrong :/
-        </div>
+        </p>
         <table>
             <tbody></tbody>
         </table>
         <script type="text/javascript">
             const humanBytes = function(bytes) {
                 let sizes = [
-                    'bytes',
-                    'KiB',
-                    'MiB',
-                    'GiB',
-                    'TiB'
+                    "bytes",
+                    "KiB",
+                    "MiB",
+                    "GiB",
+                    "TiB"
                 ];
                 if (bytes == 0) {
                     return 0;
                 }
-                let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-                return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+                let i = parseInt(
+                    Math.floor(
+                        Math.log(bytes) / Math.log(1024)
+                    )
+                );
+                return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
             };
-
-            const bucket = 'https://s3.amazonaws.com/public.nikhil.io';
-            const attributes = ['Size', 'LastModified', 'Key'];
-            const tbody = document.getElementsByTagName('tbody')[0];
+            const bucket = "https://s3.amazonaws.com/public.nikhil.io";
+            const attributes = ["Size", "LastModified", "Key"];
+            const table = document.getElementsByTagName("table")[0];
 
             window.onload = function() {
-                if (!('fetch' in window)) {
-                    console.error('No fetch!');
-                    document.getElementById('no-fetch').style.display = 'block';
+                if (!("fetch" in window)) {
+                    console.error("No fetch!");
+                    document.getElementById("no-fetch").style.display = "block";
                     return;
                 } else {
-                    fetch(bucket).then(function(response) {
+                    fetch(bucket)
+                    .then(function(response) {
+                        if (!response.ok) {
+                            document.getElementById("error").style.display = "block";
+                            console.log(response.statusText);
+                        }
                         return response.text();
-                    }).then(function(text) {
+                    })
+                    .then(function(text) {
                         let listingContents = (
                             new DOMParser()
-                        // I am not proud of this.
                         ).parseFromString(
-                            text.replace('<?xml version="1.0" encoding="UTF-8"?>\n', ''),
-                            'text/xml'
-                        ).getElementsByTagName('Contents');
+                            text, "application/xml"
+                        ).getElementsByTagName("Contents");
 
-                        for (let i = listingContents.length - 1; i >= 0; i--) {
-                            let content = listingContents[i]
-                            let tr = document.createElement('tr');
-                            let the_key = content.getElementsByTagName('Key')[0].childNodes[0].nodeValue
+                        for (i in listingContents) {
+                            let content = listingContents[i];
+                            let the_key = content.getElementsByTagName("Key")[0].childNodes[0].nodeValue;
+                            let row = table.insertRow();
 
-                            if (the_key[the_key.length - 1] != '/') {  // Do not want 'folders'
-                                for (let j = attributes.length - 1; j >= 0; j--) {
+                            if (the_key[the_key.length - 1] != "/") { // Do not want "folders"
+                                for (j in attributes) {
                                     let val = content.getElementsByTagName(attributes[j])[0].childNodes[0].nodeValue;
-                                    let td = document.createElement('td');
+                                    let col = row.insertCell(0);
 
-                                    if (attributes[j] == 'ETag') {
-                                        val = val.replace(/"/g, '');
-                                    }
-
-                                    if (attributes[j] == 'Key') {
-                                        let a = document.createElement('a');
+                                    if (attributes[j] == "Key") {
+                                        let a = document.createElement("a");
                                         a.appendChild(document.createTextNode(val));
-                                        a.setAttribute('href', '/' + val);
-                                        td.appendChild(a);
+                                        a.setAttribute("href", "/" + val);
+                                        col.appendChild(a);
                                     }
-                                    else if (attributes[j] == 'Size') {
-                                        td.appendChild(document.createTextNode(humanBytes(val)));
+                                    else if (attributes[j] == "Size") {
+                                        col.appendChild(document.createTextNode(humanBytes(val)));
+                                    }
+                                    else if (attributes[j] == "LastModified") {
+                                        col.appendChild(document.createTextNode(val));
                                     }
                                     else {
-                                        td.appendChild(document.createTextNode(val));
+                                        val = val.replace(/"/g, "");
                                     }
-
-                                    tr.appendChild(td);
-                                }
-                                tbody.appendChild(tr);
-                            }
+                                } // End for
+                            } // End if
                         } // End for
 
-                    }).catch(function(error) {
-                        console.error('Error: ' + error);
-                        document.getElementById('error').style.display = 'block';
                     }); // End fetch
-                }
-            }
+                } // End if
+            } // End window
         </script>
     </body>
 </html>
