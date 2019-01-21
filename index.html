@@ -137,16 +137,6 @@
     <tbody></tbody>
   </table>
   <script type="text/javascript">
-    /**
-     * TODO:
-     *
-     * - Page titles
-     * - If 'index.html' in path, remove it from file URL
-     * - Show the slash warning
-     * - Configure S3 for HTML mode (?)
-     * - Error
-     */
-
     const SITE_NAME = "Nikhil's Public Files";
     const S3_BUCKET_NAME = "public.nikhil.io";
     const S3_BUCKET_URL = `https://s3.amazonaws.com/${S3_BUCKET_NAME}?delimiter=/&prefix=`;
@@ -154,11 +144,11 @@
     const SORT_KEY = S3_ATTRIBUTES_OF_INTEREST[2];
 
     const humanBytes = bytes => {
-      let sizes = ["bytes", "KiB", "MiB", "GiB", "TiB"];
+      const sizes = ["bytes", "KiB", "MiB", "GiB", "TiB"];
       if (bytes == 0) {
         return 0;
       }
-      let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
       return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     };
 
