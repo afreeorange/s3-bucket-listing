@@ -281,15 +281,17 @@
       for (file of data.files) {
         let row = table.insertRow();
 
-        row
-          .insertCell()
-          .appendChild(
-            createHTMLLink(file.Key.replace(decodeURI(data.prefix), ""), file.Key)
-          );
-        row.insertCell().appendChild(document.createTextNode(file.LastModified));
-        row
-          .insertCell()
-          .appendChild(document.createTextNode(humanBytes(file.Size)));
+        if (file.Key !== "index.html") {
+            row
+              .insertCell()
+              .appendChild(
+                createHTMLLink(file.Key.replace(decodeURI(data.prefix), ""), file.Key)
+              );
+            row.insertCell().appendChild(document.createTextNode(file.LastModified));
+            row
+              .insertCell()
+              .appendChild(document.createTextNode(humanBytes(file.Size)));
+        }
       }
     };
 
