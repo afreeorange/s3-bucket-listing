@@ -1,0 +1,5 @@
+{
+    "bucket": "reports.nikhil.io",
+    "title": "Access logs",
+    "description": "S3/Cloudfront access reports generated with goaccess"
+}

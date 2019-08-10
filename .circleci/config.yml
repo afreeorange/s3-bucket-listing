@@ -11,5 +11,13 @@ jobs:
       - checkout
 
       - run:
-          name: Copying to S3
-          command: aws s3 cp index.html s3://public.nikhil.io/index.html
+          name: Copying to public.nikhil.io
+          command: |-
+            aws s3 cp index.html s3-bucket-listing.css s3-bucket-listing.js s3://public.nikhil.io/
+            aws s3 cp configs/public.nikhil.io.json s3://public.nikhil.io/s3-bucket-listing.config.json
+
+      - run:
+          name: Copying to reports.nikhil.io
+          command: |-
+            aws s3 cp index.html s3-bucket-listing.css s3-bucket-listing.js s3://reports.nikhil.io/
+            aws s3 cp configs/reports.nikhil.io.json s3://reports.nikhil.io/s3-bucket-listing.config.json

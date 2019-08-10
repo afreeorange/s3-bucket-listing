@@ -1,13 +1,4 @@
 S3 Bucket Listing
 =================
 
-Index page that provides a directory listing for [my public S3 bucket](http://public.nikhil.io)
-
-TODO
-----
-
-* [ ] Page titles
-* [ ] If 'index.html' in path, remove it from file URL
-* [ ] Show the slash warning
-* [ ] Configure S3 for HTML mode (?)
-* [ ] Error states
+Zero-dependency JS and CSS that provide a nice directory listing for some public S3 buckets. [Here's an example.](http://public.nikhil.io) See `configs/` to adapt 🤘
