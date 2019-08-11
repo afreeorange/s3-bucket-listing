@@ -18,6 +18,44 @@
         return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     };
 
+    const timeSince = date => {
+        let _date = date;
+        let secondsElapsed = 0;
+        const now = new Date();
+        const intervals = {
+            year: 31536000,
+            month: 2592000,
+            day: 86400,
+            hour: 3600,
+            minute: 60
+        };
+        let intervalType = "";
+        let intervalTypePlural = "";
+        let intervalsElapsed = 0;
+
+        if (typeof date !== "object") {
+            _date = new Date(date);
+        }
+
+        secondsElapsed = Math.floor((now - _date) / 1000);
+
+        for (interval in intervals) {
+            intervalsElapsed = Math.floor(secondsElapsed / intervals[interval]);
+            if (intervalsElapsed >= 1) {
+                intervalType = interval;
+                break;
+            }
+        }
+
+        console.log(intervalsElapsed)
+
+        if (intervalsElapsed > 1) {
+            intervalTypePlural = "s";
+        }
+
+        return `${intervalsElapsed} ${intervalType}${intervalTypePlural} ago`;
+    };
+
     /**
      * TODO: Raise an `Error` when key is not in object...
      */
@@ -128,9 +166,11 @@
                 createHTMLLink("..", getHigherLevelPrefix(data.prefix), true)
             );
 
+            // Name of object/path
             row.insertCell().appendChild(
                 createHTMLLink("..", getHigherLevelPrefix(data.prefix), true)
             );
+            row.insertCell().appendChild(document.createTextNode(""));
             row.insertCell().appendChild(document.createTextNode(""));
             row.insertCell().appendChild(document.createTextNode(""));
         }
@@ -151,13 +191,13 @@
             row.insertCell().appendChild(boldRow);
             row.insertCell().appendChild(document.createTextNode(""));
             row.insertCell().appendChild(document.createTextNode(""));
+            row.insertCell().appendChild(document.createTextNode(""));
         }
 
         // Draw files next. Direct links!
         for (file of data.files) {
-            let row = table.insertRow();
-
-            if (DO_NOT_RENDER.indexOf(file.Key) === -1) {
+            if (DO_NOT_RENDER.indexOf(file.Key) === -1 && escape(file.Key) !== data.prefix) {
+                let row = table.insertRow();
                 row.insertCell().appendChild(
                     createHTMLLink(
                         file.Key.replace(decodeURI(data.prefix), ""),
@@ -168,6 +208,9 @@
                     document.createTextNode(file.LastModified)
                 );
                 row.insertCell().appendChild(
+                    document.createTextNode(`${timeSince(file.LastModified)}`)
+                );
+                row.insertCell().appendChild(
                     document.createTextNode(humanBytes(file.Size))
                 );
             }
@@ -175,16 +218,18 @@
     };
 
     const updateDocumentTitleWith = prefix => {
-        const currentTitle = document.querySelector('title').innerText;
+        const currentTitle = document.querySelector("title").innerText;
         const documentTitle = currentTitle.replace(TITLE_REGEX, "$1");
-        const strippedPrefix = prefix.replace('#!/', '');
+        const strippedPrefix = prefix.replace("#!/", "");
 
-        if (prefix === '/' || prefix === '#!/') {
-            document.querySelector('title').innerText = documentTitle;
+        if (prefix === "/" || prefix === "#!/") {
+            document.querySelector("title").innerText = documentTitle;
         } else {
-            document.querySelector('title').innerText = `${documentTitle} - ${strippedPrefix}`
+            document.querySelector(
+                "title"
+            ).innerText = `${documentTitle} - ${strippedPrefix}`;
         }
-    }
+    };
 
     const showBucketListingAtPrefix = (bucket, prefix) => {
         const bucketPrefix = getBucketPrefix();

@@ -47,10 +47,13 @@ table tr td {
     padding: 5px 30px 5px 15px;
 }
 table tr td:nth-child(2) {
-    width: 250px;
+    width: 150px;
 }
 table tr td:nth-child(3) {
-    width: 115px;
+    width: 95px;
+}
+table tr td:nth-child(4) {
+    width: 95px;
 }
 #no-fetch,
 #error {
@@ -61,18 +64,18 @@ table tr td:nth-child(3) {
 .hide {
     display: none;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
     body {
         background: #111;
     }
     table tr td:nth-child(2) {
-        color: white;
-    }
-    table tr td:nth-child(3) {
         display: none;
     }
+    table tr td:nth-child(3) {
+        color: white;
+    }
 }
-@media screen and (max-width: 605px) {
+@media screen and (max-width: 670px) {
     h1 {
         color: #39ff14;
         font-size: 2.125em;
