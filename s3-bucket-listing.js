@@ -47,8 +47,6 @@
             }
         }
 
-        console.log(intervalsElapsed)
-
         if (intervalsElapsed > 1) {
             intervalTypePlural = "s";
         }
