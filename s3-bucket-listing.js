@@ -50,6 +50,10 @@
         if (intervalsElapsed > 1) {
             intervalTypePlural = "s";
         }
+        
+        if (intervalsElapsed === 0) {
+            return "Just now";
+        }
 
         return `${intervalsElapsed} ${intervalType}${intervalTypePlural} ago`;
     };
