@@ -1,107 +1,106 @@
 body {
-    background-color: rgb(255, 233, 78);
-    font-weight: 400;
-    margin: 0;
-    padding: 0;
+  background-color: rgb(255, 233, 78);
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 a {
-    color: #ff3300;
-    padding: 3px;
-    text-decoration: none;
+  color: #ff3300;
+  padding: 3px;
+  text-decoration: none;
 }
 a:hover {
-    background: red;
-    border-radius: 5px;
-    color: white;
+  background: red;
+  border-radius: 5px;
+  color: white;
 }
 h1 {
-    color: red;
-    font-family: "Bungee Outline", arial, helvetica, sans-serif;
-    font-size: 3.5em;
-    font-weight: normal;
-    line-height: 1;
-    margin: 0 0 10px 10px;
-    padding: 5px;
+  color: red;
+  font-family: "Bungee Outline", arial, helvetica, sans-serif;
+  font-size: 3.5em;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0 0 10px 10px;
+  padding: 5px;
 }
 h1 a:hover {
-    background: none;
-    color: red;
-    font-weight: bold;
+  background: none;
+  color: red;
+  font-weight: bold;
 }
 table {
-    border-collapse: collapse;
-    font-family: "Fira Mono";
-    width: 100%;
+  border-collapse: collapse;
+  font-family: "Fira Mono";
+  width: 100%;
 }
 table tr {
-    border-bottom: 1px dotted #ff9900;
+  border-bottom: 1px dotted #ff9900;
 }
 table tr:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 table tr td {
-    color: #333;
-    padding: 5px 30px 5px 15px;
+  color: #333;
+  padding: 5px 30px 5px 15px;
 }
 table tr td:nth-child(2) {
-    width: 250px;
+  width: 250px;
 }
 table tr td:nth-child(3) {
-    width: 150px;
+  width: 150px;
 }
 table tr td:nth-child(4) {
-    width: 100px;
+  width: 100px;
 }
-#no-fetch,
 #error {
-    color: red;
-    font-family: "Fira Mono";
-    padding: 20px;
+  color: red;
+  font-family: "Fira Mono";
+  padding: 20px;
 }
 .hide {
-    display: none;
+  display: none;
 }
 @media screen and (max-width: 1110px) {
-    body {
-        background: #111;
-    }
-    table tr td:nth-child(2) {
-        display: none;
-    }
-    table tr td:nth-child(3) {
-        color: white;
-    }
+  body {
+    background: #111;
+  }
+  table tr td:nth-child(2) {
+    display: none;
+  }
+  table tr td:nth-child(3) {
+    color: white;
+  }
 }
 @media screen and (max-width: 800px) {
-    h1 {
-        color: #39ff14;
-        font-size: 2.125em;
-        text-align: center;
-    }
-    h1 a {
-        color: #39ff14;
-    }
-    a {
-        color: #39ff14;
-    }
-    a:hover {
-        background: #39ff14;
-        color: black;
-    }
-    table {
-        font-size: 0.85em;
-    }
-    table tr {
-        border-bottom: 1px dotted #666;
-    }
-    table tr td {
-        padding: 5px;
-    }
-    table tr td:nth-child(2),
-    table tr td:nth-child(3) {
-        display: none;
-    }
+  h1 {
+    color: #39ff14;
+    font-size: 2.125em;
+    text-align: center;
+  }
+  h1 a {
+    color: #39ff14;
+  }
+  a {
+    color: #39ff14;
+  }
+  a:hover {
+    background: #39ff14;
+    color: black;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  table tr {
+    border-bottom: 1px dotted #666;
+  }
+  table tr td {
+    padding: 5px;
+  }
+  table tr td:nth-child(2),
+  table tr td:nth-child(3) {
+    display: none;
+  }
 }

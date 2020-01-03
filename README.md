@@ -1,8 +1,18 @@
 S3 Bucket Listing
 =================
 
-Zero-dependency JS and CSS that provide a nice directory listing for some public S3 buckets. [Here's an example.](http://public.nikhil.io)
+Zero-dependency JS that provides a nice directory listing for some public S3 buckets. [Here's an example](http://public.nikhil.io).
 
 ### Usage
 
-Needs all static files (which won't be rendered in listing) and one named `s3-bucket-listing.config.json`. See `configs` for examples.
+Create `s3-bucket-listing.config.json`. See `configs` for examples. Then drop these three files into an S3 bucket:
+
+* `index.html`
+* `s3-bucket-listing.css`
+* `s3-bucket-listing.js`
+
+I run this and [inline the styles and scripts](https://www.npmjs.com/package/inline-source-cli) to get a single file 🤗
+
+```bash
+inline-source --compress false --root ./ index.html > build.html
+```
