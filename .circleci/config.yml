@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Copying to destinations in configs/
           command: |-
-            for JSON_FILE in configs/*; do
+            for JSON_FILE in configs/*.json; do
                 SITE="$(basename "${JSON_FILE%.json}")";
 
                 aws s3 cp build.html s3://"$SITE"/index.html
