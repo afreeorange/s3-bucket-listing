@@ -8,5 +8,5 @@ tab_width = 4
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{css,js,yaml,yml}]
+[*.{css,js,json,yaml,yml}]
 indent_size = 2

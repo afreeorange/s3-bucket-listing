@@ -4,6 +4,7 @@
     "s3-bucket-listing.config.json",
     "s3-bucket-listing.js",
     "s3-bucket-listing.css",
+    "s3-bucket-listing.og-image.png"
   ];
   const S3_ATTRIBUTES_OF_INTEREST = ["Key", "Size", "LastModified"];
   const SORT_KEY = S3_ATTRIBUTES_OF_INTEREST[2];
@@ -258,6 +259,9 @@
     document
       .querySelector('meta[property="og:description"]')
       .setAttribute("content", config.description);
+    document
+      .querySelector('meta[property="og:image"]')
+      .setAttribute("content", "/s3-bucket-listing.og-image.png");
     document
       .querySelector(".listing-title")
       .setAttribute("href", `https://${config.bucket}`);

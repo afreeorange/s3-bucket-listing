@@ -21,4 +21,5 @@ jobs:
 
                 aws s3 cp build.html s3://"$SITE"/index.html
                 aws s3 cp configs/"$SITE".json s3://"$SITE"/s3-bucket-listing.config.json
+                aws s3 cp configs/"$SITE".og-image.png s3://"$SITE"/s3-bucket-listing.og-image.png
             done
