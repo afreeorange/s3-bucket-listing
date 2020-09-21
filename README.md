@@ -16,3 +16,7 @@ I run this and [inline the styles and scripts](https://www.npmjs.com/package/inl
 ```bash
 inline-source --compress false --root ./ index.html > build.html
 ```
+
+### TODO
+
+* [ ] "Directory" nodes must be alphabetized (and intelligently)
