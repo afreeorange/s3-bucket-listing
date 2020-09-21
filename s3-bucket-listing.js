@@ -4,13 +4,13 @@
     "s3-bucket-listing.config.json",
     "s3-bucket-listing.js",
     "s3-bucket-listing.css",
-    "s3-bucket-listing.og-image.png"
+    "s3-bucket-listing.og-image.png",
   ];
   const S3_ATTRIBUTES_OF_INTEREST = ["Key", "Size", "LastModified"];
   const SORT_KEY = S3_ATTRIBUTES_OF_INTEREST[2];
   const TITLE_REGEX = /(.*)\s\-\s(.*)/;
 
-  const humanBytes = bytes => {
+  const humanBytes = (bytes) => {
     const sizes = ["bytes", "KiB", "MiB", "GiB", "TiB"];
     if (bytes == 0) {
       return 0;
@@ -19,7 +19,7 @@
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
   };
 
-  const timeSince = date => {
+  const timeSince = (date) => {
     let _date = date;
     let secondsElapsed = 0;
     const now = new Date();
@@ -73,7 +73,7 @@
     });
   };
 
-  const xmlFolderListingToObject = xmlFolderListing => {
+  const xmlFolderListingToObject = (xmlFolderListing) => {
     let _list_of_folders = [];
 
     for (contentNode of xmlFolderListing) {
@@ -89,7 +89,7 @@
    * Take an `HTMLCollection` of the files in the upstream response and
    * turn it into a JS object we can manipulate <3
    */
-  const xmlFileListingToObject = xmlFileListing => {
+  const xmlFileListingToObject = (xmlFileListing) => {
     let _map_of_s3_objects = [];
 
     for (let contentNode of xmlFileListing) {
@@ -113,14 +113,14 @@
    */
   const getS3Contents = (bucket, prefix) =>
     fetch(`${bucket}${prefix}`)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           document.getElementById("error").style.display = "block";
           console.log(response.statusText);
         }
         return response.text();
       })
-      .then(rawXML => {
+      .then((rawXML) => {
         parsedXML = new DOMParser().parseFromString(rawXML, "application/xml");
 
         let folders = parsedXML.getElementsByTagName("CommonPrefixes");
@@ -150,7 +150,7 @@
     return a;
   };
 
-  const getHigherLevelPrefix = prefix => {
+  const getHigherLevelPrefix = (prefix) => {
     let splits = prefix.split("/");
     return splits.length <= 2 ? "" : `${splits[0]}/`;
   };
@@ -225,7 +225,7 @@
     }
   };
 
-  const updateDocumentTitleWith = prefix => {
+  const updateDocumentTitleWith = (prefix) => {
     const currentTitle = document.querySelector("title").innerText;
     const documentTitle = currentTitle.replace(TITLE_REGEX, "$1");
     const strippedPrefix = prefix.replace("#!/", "");
@@ -244,14 +244,14 @@
     const tbody = document.getElementsByTagName("tbody")[0];
     tbody.innerHTML = ""; // I'm tired and don't care.
 
-    getS3Contents(bucket, getBucketPrefix()).then(data =>
+    getS3Contents(bucket, getBucketPrefix()).then((data) =>
       drawListing(tbody, data),
     );
 
     updateDocumentTitleWith(prefix);
   };
 
-  const customizeListing = config => {
+  const customizeListing = (config) => {
     document.querySelector("title").innerText = config.title;
     document
       .querySelector('meta[property="og:title"]')
@@ -272,17 +272,15 @@
 
   const bootstrap = () => {
     fetch("/s3-bucket-listing.config.json")
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(config => {
+      .then((config) => {
         customizeListing(config);
-        window.bucketLocation = `https://s3.amazonaws.com/${
-          config.bucket
-        }?delimiter=/&prefix=`;
+        window.bucketLocation = `https://s3.amazonaws.com/${config.bucket}?delimiter=/&prefix=`;
         showBucketListingAtPrefix(window.bucketLocation, "/");
       })
-      .catch(e => {
+      .catch((e) => {
         document.getElementById("error").style.display = "block";
         console.error("Could not find config file 😕");
         console.log(e);
