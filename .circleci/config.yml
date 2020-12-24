@@ -16,10 +16,17 @@ jobs:
       - run:
           name: Copying to destinations in configs/
           command: |-
-            for JSON_FILE in configs/*.json; do
-                SITE="$(basename "${JSON_FILE%.json}")";
+            # Can write this in a loop but whatever. Needed a separate config
+            # for a bucket (static-log). Copypasta is fine 💗
 
-                aws s3 cp build.html s3://"$SITE"/index.html
-                aws s3 cp configs/"$SITE".json s3://"$SITE"/s3-bucket-listing.config.json
-                aws s3 cp configs/"$SITE".og-image.png s3://"$SITE"/s3-bucket-listing.og-image.png
-            done
+            aws s3 cp build.html s3://public.nikhil.io/index.html
+            aws s3 cp configs/public.nikhil.io.json s3://public.nikhil.io/s3-bucket-listing.config.json
+            aws s3 cp configs/public.nikhil.io.og-image.png s3://public.nikhil.io/s3-bucket-listing.og-image.png
+
+            aws s3 cp build.html s3://reports.nikhil.io/index.html
+            aws s3 cp configs/reports.nikhil.io.json s3://reports.nikhil.io/s3-bucket-listing.config.json
+            aws s3 cp configs/reports.nikhil.io.og-image.png s3://reports.nikhil.io/s3-bucket-listing.og-image.png
+
+            aws s3 cp build.html s3://static-log.nikhil.io/index.html
+            aws s3 cp configs/static-log.nikhil.io.json s3://static-log.nikhil.io/s3-bucket-listing.config.json
+            aws s3 cp configs/static-log.nikhil.io.og-image.png s3://static-log.nikhil.io/s3-bucket-listing.og-image.png
