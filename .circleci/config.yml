@@ -27,6 +27,7 @@ jobs:
             aws s3 cp configs/reports.nikhil.io.json s3://reports.nikhil.io/s3-bucket-listing.config.json
             aws s3 cp configs/reports.nikhil.io.og-image.png s3://reports.nikhil.io/s3-bucket-listing.og-image.png
 
-            aws s3 cp build.html s3://static-log.nikhil.io/index.html
+            aws s3 cp build.html s3://static-log.nikhil.io/listing.html
             aws s3 cp configs/static-log.nikhil.io.json s3://static-log.nikhil.io/s3-bucket-listing.config.json
             aws s3 cp configs/static-log.nikhil.io.og-image.png s3://static-log.nikhil.io/s3-bucket-listing.og-image.png
+
