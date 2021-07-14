@@ -1,6 +1,6 @@
 # S3 Bucket Listing
 
-Zero-dependency JS that provides a nice directory listing for some public S3 buckets. [Here's an example](http://public.nikhil.io).
+Zero-dependency JS that provides a nice directory listing for some public S3 buckets. [Here's an example](https://lolzil.la/lolz).
 
 ## Usage
 
@@ -8,7 +8,7 @@ TODO: Finish this section
 
 ## Development
 
-You will need [ParcelJS](https://parceljs.org/).
+You will need [ParcelJS](https://parceljs.org/). TODO: Finish this section
 
 ```bash
 # Install dependencies
@@ -31,3 +31,5 @@ yarn clean
 * [ ] Fix table sorting
 * [ ] Support initial prefix
 * [ ] Support installing in a prefix (not just the root prefix)
+* [ ] Rounded input corners on mobile 🤦‍♀️
+* [ ] Footer with link to project
