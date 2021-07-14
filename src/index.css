@@ -1,0 +1,214 @@
+:root {
+  --root-spacing: 0.5em;
+  --root-font-size: 16px;
+  --left-right-margin: calc(var(--root-font-size) / 2);
+  --top-bottom-margin: calc(var(--root-font-size) / 6);
+
+  --color-background: rgb(255, 233, 78);
+  --color-secondary: #f90;
+  --color-tertiary: #333;
+  --color-link: #cc0000;
+
+  --font-heading: "Bungee Outline";
+  --font-body: "DM Mono";
+}
+
+/* Reset */
+
+html {
+  box-sizing: border-box;
+  font-size: var(--root-font-size);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles */
+
+body {
+  background: var(--color-background);
+}
+
+a {
+  color: var(--color-link);
+  padding: calc(var(--root-spacing) / 4) 0;
+  text-decoration: none;
+}
+a:hover {
+  background: var(--color-link);
+  color: white;
+}
+
+h1 {
+  color: var(--color-link);
+  font-family: var(--font-heading);
+  font-size: calc(var(--root-font-size) * 3);
+  margin: var(--top-bottom-margin) var(--left-right-margin);
+}
+h1 a {
+  color: var(--color-link);
+  font-weight: normal;
+}
+h1 a:hover {
+  background: none;
+  color: var(--color-link);
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  width: 100%;
+  margin-bottom: calc(var(--root-spacing) * 2);
+}
+table thead tr th {
+  text-align: left;
+  font-family: var(--font-heading);
+  color: var(--color-link);
+  font-size: calc(var(--root-font-size) * 1.5);
+  padding: var(--top-bottom-margin) var(--left-right-margin);
+}
+table tbody tr {
+  border-bottom: 1px dotted var(--color-secondary);
+}
+table tbody tr:last-child {
+  border-bottom: none;
+}
+table tbody tr td {
+  padding: var(--top-bottom-margin) var(--left-right-margin);
+}
+table tbody tr td:nth-of-type(2) {
+  width: 260px;
+}
+table tbody tr td:nth-of-type(3) {
+  width: 150px;
+}
+table tbody tr td:nth-of-type(4) {
+  width: 100px;
+}
+table thead tr th:nth-of-type(2),
+table thead tr th:nth-of-type(3),
+table thead tr th:nth-of-type(4),
+table tbody tr td:nth-of-type(2),
+table tbody tr td:nth-of-type(3),
+table tbody tr td:nth-of-type(4) {
+  color: var(--color-tertiary);
+  text-align: right;
+}
+
+noscript {
+  color: var(--color-secondary);
+  font-family: var(--font-heading);
+  font-size: calc(var(--root-font-size) * 3);
+}
+
+input {
+  width: 100%;
+  background: var(--color-background);
+  border: 4px double var(--color-secondary);
+  border-left: 0;
+  border-right: 0;
+  padding: calc(var(--root-spacing));
+  margin: calc(var(--root-spacing) * 2) 0;
+  font-family: var(--font-body);
+}
+input:focus {
+  background: var(--color-link);
+  color: var(--color-background);
+}
+
+/** Tablesort */
+
+th[role="columnheader"]:not(.no-sort) {
+  cursor: pointer;
+  color: var(--color-secondary);
+}
+
+th[role="columnheader"]:hover {
+  font-weight: bold;
+  color: var(--color-link);
+}
+
+th[aria-sort="ascending"]::after {
+  content: " ⬆";
+  font-size: var(--root-font-size);
+  padding-left: var(--root-spacing);
+  display: inline-block;
+}
+
+th[aria-sort="descending"]::after {
+  content: " ⬇";
+  font-size: var(--root-font-size);
+  padding-left: var(--root-spacing);
+  display: inline-block;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--color-link);
+  opacity: 1; /* Firefox */
+}
+
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+  color: var(--color-link);
+}
+
+/* Microsoft Edge */
+::-ms-input-placeholder {
+  color: var(--color-link);
+}
+
+@media screen and (max-width: 1110px) {
+  :root {
+    --root-spacing: 1em;
+    --root-font-size: 15px;
+
+    --color-background: #101010;
+    --color-secondary: #666;
+    --color-tertiary: #fff;
+    --color-link: #f30;
+  }
+
+  table thead,
+  table tbody tr td:nth-of-type(2) {
+    display: none;
+  }
+  table tbody tr td:nth-of-type(4) {
+    color: var(--color-secondary);
+  }
+}
+@media screen and (max-width: 800px) {
+  :root {
+    --root-spacing: 0.75em;
+    --root-font-size: 13px;
+
+    --color-background: #101010;
+    --color-secondary: #666;
+    --color-tertiary: #fff;
+    --color-link: #39ff14;
+  }
+
+  h1 {
+    font-size: calc(var(--root-font-size) * 2.5);
+    text-align: center;
+  }
+  table tr td:nth-of-type(3) {
+    display: none;
+  }
+  table tr td:nth-of-type(4) {
+    text-align: right;
+  }
+}
+
+/* background: #39ff14; */

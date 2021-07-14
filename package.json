@@ -1,0 +1,21 @@
+{
+  "name": "s3-bucket-listing",
+  "version": "1.0.0",
+  "description": "Quick and Simple S3 Bucket Listing",
+  "main": "dist/index.html",
+  "repository": "git@github.com:afreeorange/s3-bucket-listing.git",
+  "author": "Nikhil Anand <mail@nikhil.io> (https://nikhil.io)",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "parcel build --no-content-hash src/index.html",
+    "start": "parcel serve src/index.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.3.1",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "umbrellajs": "^3.2.3"
+  }
+}
