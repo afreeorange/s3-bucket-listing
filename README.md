@@ -29,3 +29,5 @@ yarn clean
 * [ ] "Directory" nodes must be alphabetized (and intelligently)
 * [ ] Parcel output [must not have hashes](https://github.com/parcel-bundler/parcel/issues/5894) (or have a filename that can be excluded)
 * [ ] Fix table sorting
+* [ ] Support initial prefix
+* [ ] Support installing in a prefix (not just the root prefix)
