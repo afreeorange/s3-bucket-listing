@@ -3,31 +3,33 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: afreeorange/build:latest
+      - image: cimg/node:14.15.2
 
     steps:
       - checkout
 
+      # Download and cache dependencies. Use the latest cache
+      # if no exact match is found.
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+
+      - run:
+          name: Installing dependencies
+          command: yarn
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+
       - run:
           name: Building
           command:
-            inline-source --compress false --root ./ index.html > build.html
+            yarn build:all
 
       - run:
-          name: Copying to destinations in configs/
-          command: |-
-            # Can write this in a loop but whatever. Needed a separate config
-            # for a bucket (static-log). Copypasta is fine 💗
-
-            aws s3 cp build.html s3://public.nikhil.io/index.html
-            aws s3 cp configs/public.nikhil.io.json s3://public.nikhil.io/s3-bucket-listing.config.json
-            aws s3 cp configs/public.nikhil.io.og-image.png s3://public.nikhil.io/s3-bucket-listing.og-image.png
-
-            aws s3 cp build.html s3://reports.nikhil.io/index.html
-            aws s3 cp configs/reports.nikhil.io.json s3://reports.nikhil.io/s3-bucket-listing.config.json
-            aws s3 cp configs/reports.nikhil.io.og-image.png s3://reports.nikhil.io/s3-bucket-listing.og-image.png
-
-            aws s3 cp build.html s3://static-log.nikhil.io/listing.html
-            aws s3 cp configs/static-log.nikhil.io.json s3://static-log.nikhil.io/s3-bucket-listing.config.json
-            aws s3 cp configs/static-log.nikhil.io.og-image.png s3://static-log.nikhil.io/s3-bucket-listing.og-image.png
-
+          name: Deploying to destinations in `configs`
+          command: 
+            yarn deploy

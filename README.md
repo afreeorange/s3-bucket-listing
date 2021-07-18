@@ -1,22 +1,40 @@
-S3 Bucket Listing
-=================
+# S3 Bucket Listing
 
-Zero-dependency JS that provides a nice directory listing for some public S3 buckets. [Here's an example](http://public.nikhil.io).
+Provides a nice directory listing for some public S3 buckets. [Here's an example](https://public.nikhil.io).
 
-### Usage
+## Usage
 
-Create `s3-bucket-listing.config.json`. See `configs` for examples. Then drop these three files into an S3 bucket:
+Look in `configs` and create a similar configuration (and remove the others.) To add an OpenGraph image for nice previews, see `assets/` for an editable [Acorn](https://flyingmeat.com/acorn/) version. See `src/` for CSS you can customize. It's all very simple 🤗
 
-* `index.html`
-* `s3-bucket-listing.css`
-* `s3-bucket-listing.js`
+## Development
 
-I run this and [inline the styles and scripts](https://www.npmjs.com/package/inline-source-cli) to get a single file 🤗
+You will need [ParcelJS](https://parceljs.org/).
 
 ```bash
-inline-source --compress false --root ./ index.html > build.html
+# Install dependencies
+yarn
+
+# Start development server. This will use `configs/env.local`
+yarn start
+
+# Build the local project
+yarn build:local
+
+# Build all projects prefixed with `env` in `configs`
+yarn build:all
+
+# Clean all builds
+yarn clean
 ```
 
 ### TODO
 
+* [ ] Proper typing and comments
 * [ ] "Directory" nodes must be alphabetized (and intelligently)
+* [ ] Parcel output [must not have hashes](https://github.com/parcel-bundler/parcel/issues/5894) (or have a filename that can be excluded)
+* [ ] Fix table sorting
+* [ ] Support initial prefix
+* [ ] Support installing in a prefix (not just the root prefix)
+* [ ] Rounded input corners on mobile 🤦‍♀️
+* [ ] Footer with link to project
+* [ ] PostHTML expressions for env var interpolation: title and description

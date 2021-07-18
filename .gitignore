@@ -1,6 +1,8 @@
 *.config.json
 .DS_Store
 .cache
-build
-build.html
-dist
+.backup
+dist*
+node_modules
+.parcel-cache
+yarn-*
