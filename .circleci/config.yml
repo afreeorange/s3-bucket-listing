@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: afreeorange:build/latest
+      - image: afreeorange/build:latest
 
     steps:
       - checkout
