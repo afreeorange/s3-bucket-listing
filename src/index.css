@@ -65,6 +65,22 @@ h1 a:hover {
   font-weight: bold;
 }
 
+input {
+  width: 100%;
+  background: var(--color-background);
+  border: 4px double var(--color-secondary);
+  border-left: 0;
+  border-right: 0;
+  padding: calc(var(--root-spacing));
+  margin: calc(var(--root-spacing) * 2) 0;
+  font-family: var(--font-body);
+  font-size: var(--root-font-size);
+}
+input:focus {
+  background: var(--color-link);
+  color: var(--color-background);
+}
+
 table {
   border-collapse: collapse;
   font-family: var(--font-body);
@@ -106,27 +122,6 @@ table tbody tr td:nth-of-type(4) {
   text-align: right;
 }
 
-noscript {
-  color: var(--color-secondary);
-  font-family: var(--font-heading);
-  font-size: calc(var(--root-font-size) * 3);
-}
-
-input {
-  width: 100%;
-  background: var(--color-background);
-  border: 4px double var(--color-secondary);
-  border-left: 0;
-  border-right: 0;
-  padding: calc(var(--root-spacing));
-  margin: calc(var(--root-spacing) * 2) 0;
-  font-family: var(--font-body);
-}
-input:focus {
-  background: var(--color-link);
-  color: var(--color-background);
-}
-
 /** Tablesort */
 
 th[role="columnheader"]:not(.no-sort) {
@@ -151,6 +146,20 @@ th[aria-sort="descending"]::after {
   font-size: var(--root-font-size);
   padding-left: var(--root-spacing);
   display: inline-block;
+}
+
+footer {
+  font-family: var(--font-body);
+  margin-bottom: calc(var(--root-spacing) * 3);
+  padding: calc(var(--root-spacing) * 1);
+  text-align: right;
+  text-transform: lowercase;
+}
+
+noscript {
+  color: var(--color-secondary);
+  font-family: var(--font-heading);
+  font-size: calc(var(--root-font-size) * 3);
 }
 
 ::placeholder {

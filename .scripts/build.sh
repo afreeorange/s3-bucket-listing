@@ -18,10 +18,10 @@ for ENV in $(find "$CONFIG_FOLDER" -type f -iname "env.*"); do
 
     # Copy over the OpenGraph image
     if [[ -f "$CONFIG_FOLDER/og-image.$SITE.png" ]]; then
-        cp "$CONFIG_FOLDER/og-image.$SITE.png" src/og-image.png
+        cp "$CONFIG_FOLDER/og-image.$SITE.png" src/index.og-image.png
     else
         echo "Using default OG Image"
-        cp "$CONFIG_FOLDER/og-image.local.png" src/og-image.png
+        cp "$CONFIG_FOLDER/og-image.local.png" src/index.og-image.png
     fi
 
     # Copy over configs. Parcel uses these to inject the bucket names (and
@@ -38,3 +38,4 @@ done
 
 # Restore the local OG image #CLEANLINESS
 cp og-image.png.backup src/og-image.png
+rm og-image.png.backup

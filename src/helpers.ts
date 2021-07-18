@@ -1,6 +1,6 @@
 export const humanBytes = (bytes: string): string => {
   const _bytes = parseFloat(bytes);
-  const sizes = ["bytes", "KiB", "MiB", "GiB", "TiB"];
+  const sizes = ["B", "KiB", "MiB", "GiB", "TiB"];
   if (_bytes == 0) {
     return "Zero";
   }

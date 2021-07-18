@@ -33,8 +33,10 @@ yarn clean
 * [ ] "Directory" nodes must be alphabetized (and intelligently)
 * [ ] Parcel output [must not have hashes](https://github.com/parcel-bundler/parcel/issues/5894) (or have a filename that can be excluded)
 * [ ] Fix table sorting
-* [ ] Support initial prefix
-* [ ] Support installing in a prefix (not just the root prefix)
-* [ ] Rounded input corners on mobile 🤦‍♀️
+* [x] Support initial prefix
+* [x] Support installing in a prefix (not just the root prefix)
+* [x] Fix input corners on mobile 🤦‍♀️
 * [ ] Footer with link to project
 * [ ] PostHTML expressions for env var interpolation: title and description
+* [ ] `index\..*\.(js|css|png|config|json).*` exclusion only at root
+* [ ] `<thead>`ings for responsive stuff
