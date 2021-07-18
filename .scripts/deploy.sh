@@ -15,5 +15,5 @@ for ENV in $(find "$CONFIG_FOLDER" -type f -iname "env.*" -and -not -name "env.l
         exit 1
     fi
 
-    aws s3 sync "dist.$SITE"/ "s3://$SITE/" --dry
+    aws s3 sync "dist.$SITE"/ "s3://$SITE/"
 done
