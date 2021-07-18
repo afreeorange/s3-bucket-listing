@@ -1,7 +1,8 @@
 *.config.json
 .DS_Store
 .cache
-dist
+.backup
+dist*
 node_modules
 .parcel-cache
 yarn-*

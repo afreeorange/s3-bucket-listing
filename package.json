@@ -7,13 +7,16 @@
   "author": "Nikhil Anand <mail@nikhil.io> (https://nikhil.io)",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist",
-    "build": "parcel build --no-content-hash src/index.html",
-    "start": "parcel serve src/index.html"
+    "build:all": "bash .scripts/build.sh",
+    "build:local": "parcel build src/index.html",
+    "clean": "rm -rfv dist*",
+    "deploy": "bash .scripts/deploy.sh",
+    "serve": "parcel src/index.html",
+    "start": "bash .scripts/start.sh"
   },
   "devDependencies": {
     "parcel": "^2.0.0-beta.3.1",
-    "rimraf": "^3.0.2"
+    "posthtml-expressions": "^1.7.1"
   },
   "dependencies": {
     "umbrellajs": "^3.2.3"

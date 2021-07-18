@@ -25,7 +25,7 @@ const inputListener = (
   return drawBucketListing(results);
 };
 
-const updateDocumentMetaData = ({ bucket, prefix }: Listing) => {
+export const updateDocumentMetaData = ({ bucket, prefix }: Listing) => {
   u("title").text(`${bucket}/${prefix ? prefix : ""}`);
   u("meta[property='og:title']").text(`${bucket}/${prefix ? prefix : ""}`);
 };

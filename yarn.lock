@@ -2203,6 +2203,11 @@ fault@^1.0.0:
   dependencies:
     format "^0.2.0"
 
+fclone@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/fclone/-/fclone-1.0.11.tgz#10e85da38bfea7fc599341c296ee1d77266ee640"
+  integrity sha1-EOhdo4v+p/xZk0HClu4ddyZu5kA=
+
 filesize@^6.1.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-6.4.0.tgz#914f50471dd66fdca3cefe628bd0cde4ef769bcd"
@@ -4029,6 +4034,15 @@ postcss@^8.0.5, postcss@^8.2.1:
     colorette "^1.2.2"
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
+
+posthtml-expressions@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/posthtml-expressions/-/posthtml-expressions-1.7.1.tgz#b62b47a9c2cc8216cbbb07d2e9e7b293f3c1f5bc"
+  integrity sha512-OtshMi4yJO/KAUSzLOdhWPaffPApY3lXZpJKzu4jVHfO7b8/a26Hgsl/cjC6PGtpyDEHbYChnV/b4DbIUoVREw==
+  dependencies:
+    fclone "^1.0.11"
+    posthtml-parser "^0.6.0"
+    posthtml-render "^1.4.0"
 
 posthtml-parser@^0.6.0:
   version "0.6.0"
