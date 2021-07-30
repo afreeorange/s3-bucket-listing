@@ -4724,6 +4724,16 @@ symbol-tree@^3.2.2:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
+table-sort-js@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/table-sort-js/-/table-sort-js-1.4.7.tgz#bc7f587537e43809e5c3b47a3d88853dc8b502c9"
+  integrity sha512-ZoFXQGwv0KfHW6IqSINFHzCMVh3XDmDDiZnkrg0x9hRLPCgI1+walpjkUp70KIspQ8RHA2oGHAi/2JExbCxT2g==
+
+tablesort@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/tablesort/-/tablesort-5.2.1.tgz#722f6f8b13062709ac22aa16bc03c126c6ccf558"
+  integrity sha512-AmNSrtzyba5Bd+Fm8oJJj/xS2bj5acoHEsDHxER2/4Tzo+5noPORpEsSLT9dI15X2MIuXlNnj+BBQcpMsoeTXQ==
+
 term-size@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/term-size/-/term-size-2.2.1.tgz#2a6a54840432c2fb6320fea0f415531e90189f54"

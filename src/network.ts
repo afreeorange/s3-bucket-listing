@@ -43,6 +43,16 @@ const turnListingToJSON = (listingText: string): Object =>
  * @returns
  */
 const createListing = (rawListingObject: Object): Listing => {
+  /**
+   * Need this to filter out any `index*` files at the root prefix
+   */
+  let prefix;
+  try {
+    prefix = rawListingObject["ListBucketResult"]["Prefix"]["#text"];
+  } catch (error) {
+    prefix = "";
+  }
+
   let folders = [];
   try {
     folders = rawListingObject["ListBucketResult"]["CommonPrefixes"].map(
@@ -61,24 +71,22 @@ const createListing = (rawListingObject: Object): Listing => {
      * there is only one child in a sub-tree and an array if there are more
      * than one (and I am too lazy to modify the original function.)
      */
-    if (Array.isArray(rawListingObject["ListBucketResult"]["Contents"])) {
-      files = rawListingObject["ListBucketResult"]["Contents"].map((p) =>
-        makeFileObject(p)
-      );
+    let _ = !Array.isArray(rawListingObject["ListBucketResult"]["Contents"])
+      ? [rawListingObject["ListBucketResult"]["Contents"]]
+      : rawListingObject["ListBucketResult"]["Contents"];
+
+    /**
+     * Remove any `index*` files if we're at the root prefix
+     */
+    if (prefix) {
+      files = _.map((p) => makeFileObject(p));
     } else {
-      files.push(
-        makeFileObject(rawListingObject["ListBucketResult"]["Contents"])
+      files = _.filter((p) => !p["Key"]["#text"].includes("index")).map((p) =>
+        makeFileObject(p)
       );
     }
   } catch (error) {
     console.info("No files at this prefix");
-  }
-
-  let prefix;
-  try {
-    prefix = rawListingObject["ListBucketResult"]["Prefix"]["#text"];
-  } catch (error) {
-    prefix = "";
   }
 
   return {

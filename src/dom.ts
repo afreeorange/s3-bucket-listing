@@ -1,5 +1,6 @@
 import u from "umbrellajs";
 import { debounce } from "./helpers";
+import Tablesort from "tablesort";
 
 import { getBucketListing } from "./network";
 import { Listing } from "./types";
@@ -69,7 +70,7 @@ const drawBucketListing = ({ bucket, prefix, files, folders }: Listing) => {
     u("#files thead").html(`
           <tr>
             <th data-sort-default>Name</th>
-            <th colspan="2">Last Modified</th>
+            <th>Last Modified</th>
             <th>Size</th>
           </tr>
         `);
@@ -88,9 +89,10 @@ const drawBucketListing = ({ bucket, prefix, files, folders }: Listing) => {
           .replace(prefix, "")
           .replace("/", "")}</a>
                 </td>
-                <td>${f.lastModified}</td>
-                <td>${f.lastModifiedHuman}</td>
-                <td>${f.sizeHuman}</td>
+                <td data-sort="${f.lastModified}">
+                  ${f.lastModifiedHuman} <span>${f.lastModified}</span>
+                </td>
+                <td data-sort="${f.size}">${f.sizeHuman}</td>
               </tr>
           `
       )
@@ -120,4 +122,5 @@ export const drawDOM = async (bucket, prefix) => {
 
   drawBucketListing(listing);
   updateDocumentMetaData(listing);
+  new Tablesort(document.getElementById("files"));
 };

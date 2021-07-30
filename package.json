@@ -19,6 +19,8 @@
     "posthtml-expressions": "^1.7.1"
   },
   "dependencies": {
+    "table-sort-js": "^1.4.7",
+    "tablesort": "^5.2.1",
     "umbrellajs": "^3.2.3"
   }
 }
