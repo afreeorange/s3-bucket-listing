@@ -16,5 +16,5 @@ for ENV in $(find "$CONFIG_FOLDER" -type f -iname "env.*" -and -not -name "env.l
     fi
 
     PREFIX=$(grep PREFIX "configs/env.$SITE" | cut -d'"' -f2)
-    aws s3 sync "dist.$SITE"/ "s3://$SITE/$PREFIX"
+    aws s3 sync "dist.$SITE"/ "s3://$SITE/$PREFIX" --profile nikhil.io
 done
