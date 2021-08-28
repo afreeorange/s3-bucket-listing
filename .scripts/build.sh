@@ -30,7 +30,7 @@ for ENV in $(find "$CONFIG_FOLDER" -type f -iname "env.*"); do
     
     # Build the site. Get the public URL first.
     PUBLIC_URL=$(grep PUBLIC_URL "configs/env.$SITE" | cut -d'"' -f2)
-    yarn build:local --public-url "$PUBLIC_URL"
+    yarn build:local --public-url "$PUBLIC_URL" --no-source-maps
     
     # Rename the dist to match the site
     mv dist "dist.$SITE"
