@@ -22,24 +22,27 @@
   </header>
 
   <main>
-  <input type="text" placeholder="search">
+    <input type="text" placeholder="search">
 
-  <table id="folders">
-    <tbody></tbody>
-  </table>
+    <table id="folders">
+      <tbody></tbody>
+    </table>
 
-  <table id="files">
-    <thead></thead>
-    <tbody></tbody>
-  </table>
+    <table id="files">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
   </main>
 
   <footer>
-    <a href="https://github.com/afreeorange/s3-bucket-listing" title="Source code to this listing">Source</a>
+    <a href="https://github.com/afreeorange/s3-bucket-listing" title="Source code to this listing"></a>
   </footer>
 
   <noscript>This won't work if you have JavaScript disabled 😬</noscript>
-  <script type="text/javascript" src="./index.ts"></script>
+  <script type="module">
+    import { entryPoint } from "./index.ts";
+    entryPoint();
+  </script>
 </body>
 
 </html>

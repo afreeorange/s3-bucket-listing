@@ -18,5 +18,5 @@ export const DEBOUNCE_INTERVAL_IN_MS = 250;
 /**
  * When we're unable to read a .env file for Parcel to build with...
  */
-export const DEFAULT_BUCKET = "public.nikhil.io"
-export const DEFAULT_PREFIX = ""
+export const DEFAULT_BUCKET = "public.nikhil.io";
+export const DEFAULT_PREFIX = "";

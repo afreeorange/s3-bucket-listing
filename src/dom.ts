@@ -100,8 +100,8 @@ const drawBucketListing = ({ bucket, prefix, files, folders }: Listing) => {
   );
 };
 
-export const drawDOM = async (bucket, prefix) => {
-  let listing;
+export const drawDOM = async (bucket: string, prefix: string) => {
+  let listing: Listing;
 
   try {
     listing = await getBucketListing(bucket, prefix);
@@ -124,3 +124,6 @@ export const drawDOM = async (bucket, prefix) => {
   updateDocumentMetaData(listing);
   new Tablesort(document.getElementById("files"));
 };
+
+export const drawVersion = (version: string) =>
+  (document.querySelector("footer a").innerText = version);

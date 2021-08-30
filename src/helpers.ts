@@ -50,7 +50,7 @@ export const timeSince = (date: string): string => {
 };
 
 // https://davidwalsh.name/convert-xml-json
-export const xmlToJson = (xml) => {
+export const xmlToJson = (xml: any) => {
   let obj = {};
 
   if (xml.nodeType == 1) {
@@ -81,13 +81,15 @@ export const xmlToJson = (xml) => {
       }
     }
   }
+
   return obj;
 };
 
 // https://www.freecodecamp.org/news/javascript-debounce-example/
-export const debounce = (func, timeout) => {
-  let timer;
-  return (...args) => {
+export const debounce = (func: (e: any) => any, timeout: number) => {
+  let timer: NodeJS.Timeout;
+
+  return (...args: any) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       func.apply(this, args);

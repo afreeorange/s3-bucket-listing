@@ -1,7 +1,8 @@
-import { drawDOM } from "./dom";
+import packageInfo from "../package.json";
+import { drawDOM, drawVersion } from "./dom";
 import { DEFAULT_BUCKET, DEFAULT_PREFIX } from "./constants";
 
-(async () => {
+export const entryPoint = async () => {
   const bucket = process.env.BUCKET || DEFAULT_BUCKET;
   const prefix = process.env.PREFIX;
 
@@ -13,4 +14,6 @@ import { DEFAULT_BUCKET, DEFAULT_PREFIX } from "./constants";
 
   window.onhashchange = () =>
     drawDOM(bucket, location.hash.substring(1).replace(/%20/g, " "));
-})();
+
+  drawVersion(`v${packageInfo.version}`);
+};
