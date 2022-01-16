@@ -1,35 +1,40 @@
 version: 2.1
 
+orbs:
+  # https://circleci.com/developer/orbs/orb/circleci/aws-s3
+  aws-s3: circleci/aws-s3@2.0.0
+
 jobs:
   build:
     docker:
-      - image: afreeorange/build:latest
+      # This is their "Next Generation" image
+      # https://circleci.com/developer/images/image/cimg/node
+      - image: cimg/node:14.15.2
 
     steps:
       - checkout
 
-      # Download and cache dependencies. Use the latest cache
-      # if no exact match is found.
       - restore_cache:
+          name: 🗃 Restoring package cache
           keys:
-            - v2-dependencies-{{ checksum "package.json" }}
-            - v2-dependencies-
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
 
       - run:
-          name: Installing dependencies
-          command: yarn
+          name: ⏳ Installing dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
 
       - save_cache:
+          name: 💾 Saving package cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+            - ~/.cache/yarn
 
       - run:
-          name: Building
+          name: 👷‍♀️ Building
           command:
             yarn build:all
 
       - run:
-          name: Deploying to destinations in `configs`
+          name: ☁️ Deploying to destinations in `configs`
           command: 
             yarn deploy
