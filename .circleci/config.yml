@@ -1,15 +1,9 @@
 version: 2.1
 
-orbs:
-  # https://circleci.com/developer/orbs/orb/circleci/aws-s3
-  aws-s3: circleci/aws-s3@2.0.0
-
 jobs:
   build:
     docker:
-      # This is their "Next Generation" image
-      # https://circleci.com/developer/images/image/cimg/node
-      - image: cimg/node:14.15.2
+      - image: afreeorange/build:latest
 
     steps:
       - checkout
@@ -36,5 +30,5 @@ jobs:
 
       - run:
           name: ☁️ Deploying to destinations in `configs`
-          command: 
+          command:
             yarn deploy
