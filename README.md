@@ -8,7 +8,7 @@ Look in `configs` and create a similar configuration (and remove the others.) To
 
 ## Development
 
-You will need [ParcelJS](https://parceljs.org/).
+You will need [ParcelJS](https://parceljs.org/) and Node v18.
 
 ```bash
 # Install dependencies
