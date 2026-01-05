@@ -30,8 +30,8 @@ export type BucketConfig = {
   [K in (typeof BUCKET_CONFIG_KEYS)[number]]: K extends `color${string}`
     ? string | undefined // If key starts with "color", make it optional-ish
     : K extends "ignoreRegexes"
-      ? string[] // Specific type for the regex array
-      : string; // Default for everything else
+    ? string[] // Specific type for the regex array
+    : string; // Default for everything else
 };
 
 export type BucketListing = {
@@ -52,10 +52,7 @@ export type BucketListing = {
   delimiter: string;
 };
 
-const createListing = (
-  xmlListing: XMLDocument,
-  // deployDir?: string,
-): BucketListing => {
+const createListing = (xmlListing: XMLDocument): BucketListing => {
   const ret: BucketListing = {
     bucket: xmlListing.querySelector("Name")?.textContent || "bucket", // This won't happen.
     delimiter: xmlListing.querySelector("Delimiter")?.textContent || "/",
@@ -106,7 +103,7 @@ export const fetchConfig = async () => {
     config = await req.json();
   } catch (e) {
     throw new Error(
-      `Error parsing bucket configuration. Is it valid JSON? Error: ${e}`,
+      `Error parsing bucket configuration. Is it valid JSON? Error: ${e}`
     );
   }
 
@@ -157,22 +154,21 @@ export const fetchListing = async ({
               await fetch(
                 !dummy
                   ? `https://s3.amazonaws.com/${bucket}?delimiter=/&prefix=${prefix}`
-                  : "/dummy.xml",
+                  : "/dummy.xml"
               )
             ).text(),
-            "application/xml",
-          ),
-          deployDir,
+            "application/xml"
+          )
         )
       : null;
 
   if (ignoreRegexes && listing) {
     const regexes = ignoreRegexes.map((r) => new RegExp(r));
     listing.files = listing.files.filter(
-      (f) => !regexes.some((r) => r.test(f.name)),
+      (f) => !regexes.some((r) => r.test(f.name))
     );
     listing.folders = listing.folders.filter(
-      (f) => !regexes.some((r) => r.test(f.name)),
+      (f) => !regexes.some((r) => r.test(f.name))
     );
   }
 
