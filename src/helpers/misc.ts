@@ -1,4 +1,4 @@
-import type { Resource, Setter } from "solid-js";
+import type { Resource } from "solid-js";
 import type { BucketListing } from "./listing";
 
 export const createCountString = (listing: Resource<BucketListing | null>) => {
@@ -43,28 +43,25 @@ export const getFragmentPaths = () => {
   return a.map((key, i) => [key, b[i]]);
 };
 
-export const inputListener = (
-  {
-    currentTarget: { value: term },
-  }: KeyboardEvent & { currentTarget: HTMLInputElement },
-  listing: Resource<BucketListing | null>,
-  setListing: Setter<BucketListing | null | undefined>,
-): void => {
-  const data = listing();
-  if (!data) {
-    return;
+export const filterListing = (
+  term: string,
+  listing: BucketListing | null | undefined
+): BucketListing | null => {
+  if (!listing) {
+    return null;
   }
 
   const _term = term.trim().toLowerCase();
 
   if (_term.length === 0) {
-    setListing(data);
-    return;
+    return listing;
   }
 
-  setListing({
-    ...data,
-    files: data.files.filter((f) => f.name.toLowerCase().includes(_term)),
-    folders: data.folders.filter((f) => f.name.toLowerCase().includes(_term)),
-  });
+  return {
+    ...listing,
+    files: listing.files.filter((f) => f.name.toLowerCase().includes(_term)),
+    folders: listing.folders.filter((f) =>
+      f.name.toLowerCase().includes(_term)
+    ),
+  };
 };

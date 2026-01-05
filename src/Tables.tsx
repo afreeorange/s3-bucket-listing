@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Fuck it */
-import type { Accessor, Resource } from "solid-js";
+import type { Accessor } from "solid-js";
 import humanSize from "./helpers/filesize";
 import type { BucketConfig, BucketListing } from "./helpers/listing";
 import { timeAgo } from "./helpers/time";
@@ -8,7 +8,7 @@ export const Folders = ({
   listing,
   config,
 }: {
-  listing: Resource<BucketListing | null>;
+  listing: Accessor<BucketListing | null>;
   config: Accessor<BucketConfig | null>;
 }) => (
   <table data-listing="folders">
@@ -44,7 +44,7 @@ export const Files = ({
   listing,
   ref,
 }: {
-  listing: Resource<BucketListing | null>;
+  listing: Accessor<BucketListing | null | undefined>;
   ref?: HTMLTableElement;
 }) => (
   <table data-listing="files" ref={ref}>

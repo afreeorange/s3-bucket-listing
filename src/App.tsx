@@ -1,6 +1,3 @@
-/** biome-ignore-all lint/style/useTemplate: Don't care */
-/** biome-ignore-all lint/style/noNonNullAssertion: Don't care */
-
 import { Link, Meta, Title } from "@solidjs/meta";
 import {
   createEffect,
@@ -14,15 +11,11 @@ import {
 } from "solid-js";
 
 import packageJson from "../package.json";
-import {
-  type BucketListing,
-  fetchConfig,
-  fetchListing,
-} from "./helpers/listing";
+import { fetchConfig, fetchListing } from "./helpers/listing";
 import {
   createCountString,
+  filterListing,
   getFragmentPaths,
-  inputListener,
 } from "./helpers/misc";
 import Tablesort from "./helpers/sort";
 import { Files, Folders } from "./Tables";
@@ -31,11 +24,10 @@ import "./App.css";
 
 const App = () => {
   /**
-   * Location signal for hash-based routing
+   * ----------- URI/Hash Changes -----------
    */
-  const [location, setLocation] = createSignal(
-    window.location.hash.slice(1) || "/",
-  );
+  const { hash } = window.location;
+  const [location, setLocation] = createSignal(hash.slice(1) || "/");
 
   const handleHashChange = () => {
     setLocation(window.location.hash.slice(1) || "/");
@@ -45,8 +37,9 @@ const App = () => {
   onCleanup(() => window.removeEventListener("hashchange", handleHashChange));
 
   /**
-   * Fetch config as a resource
+   * ----------- Bucket Configuration -----------
    */
+
   const [configError, setConfigError] = createSignal<Error | null>(null);
   const [config] = createResource(async () => {
     try {
@@ -57,25 +50,14 @@ const App = () => {
     }
   });
 
-  // Log config errors
-  createEffect(() => {
-    if (configError()) {
-      console.error("Config error:", configError()?.message);
-    }
-  });
-
-  /**
-   * Derive the current prefix from config + location
-   */
+  // Derive the current prefix from config + location
   const currentPrefix = createMemo(() => {
     const cfg = config();
     if (!cfg) return null;
     return location() === "/" ? cfg.prefix : location().replace("/", "");
   });
 
-  /**
-   * Config with current prefix for fetching listing
-   */
+  // Config with current prefix for fetching listing
   const configWithPrefix = createMemo(() => {
     const cfg = config();
     const prefix = currentPrefix();
@@ -84,36 +66,30 @@ const App = () => {
   });
 
   /**
-   * Fetch listing based on config with prefix
+   * ----------- Bucket Listing -----------
    */
+
+  // Fetch listing based on config with prefix
   const [listing] = createResource(configWithPrefix, fetchListing);
 
-  // Log listing errors
+  /**
+   * ----------- Search -----------
+   */
+  const [searchTerm, setSearchTerm] = createSignal("");
+
+  // Reset search when listing changes
   createEffect(() => {
-    if (listing.error) {
-      console.error("Listing error:", listing.error?.message ?? listing.error);
-    }
+    listing();
+    setSearchTerm("");
   });
 
-  /**
-   * Cached listing for search filtering
-   */
-  const [cachedListing, setCachedListing] = createSignal<
-    BucketListing | null | undefined
-  >(undefined);
-
-  createEffect(() => {
-    setCachedListing(listing());
-  });
+  // Filtered listing based on search term
+  const cachedListing = createMemo(() =>
+    filterListing(searchTerm(), listing())
+  );
 
   /**
-   * Derived loading/error states
-   */
-  const isLoading = () => config.loading || listing.loading;
-  const hasError = () => configError() || listing.error;
-
-  /**
-   * Table sorting
+   * ----------- Table Sorting -----------
    */
   let filesTable: HTMLTableElement | undefined;
 
@@ -122,6 +98,17 @@ const App = () => {
       new Tablesort(filesTable);
     }
   });
+
+  /**
+   * ----------- Loading and Error States -----------
+   */
+
+  const isLoading = () => config.loading || listing.loading;
+  const hasError = () => configError() || listing.error;
+
+  /**
+   * ----------- Now the fun part: Draw things! 🎨 -----------
+   */
 
   return (
     <>
@@ -192,7 +179,8 @@ const App = () => {
                 <Match
                   when={
                     cachedListing()?.files.length === 0 &&
-                    cachedListing()?.folders.length === 0
+                    cachedListing()?.folders.length === 0 &&
+                    searchTerm().length === 0
                   }
                 >
                   <typical-message>
@@ -209,7 +197,7 @@ const App = () => {
                   <typical-message>
                     <a
                       href={`/${
-                        config()?.deployDir ? config()?.deployDir + "/" : ""
+                        config()?.deployDir ? `${config()?.deployDir}/` : ""
                       }#/${cachedListing()?.folders[0].path}`}
                       title="Go here instead"
                     >
@@ -225,9 +213,8 @@ const App = () => {
                       autofocus
                       placeholder={`search ${createCountString(listing)}`}
                       type="search"
-                      onkeyup={(
-                        e: KeyboardEvent & { currentTarget: HTMLInputElement },
-                      ) => inputListener(e, listing, setCachedListing)}
+                      value={searchTerm()}
+                      onInput={(e) => setSearchTerm(e.currentTarget.value)}
                     />
                   </search-listing>
                 </Match>
@@ -239,11 +226,14 @@ const App = () => {
                   cachedListing()?.folders[0].name !== "/"
                 }
               >
-                <Folders listing={listing} config={() => config()!} />
+                <Folders
+                  listing={cachedListing}
+                  config={() => config() ?? null}
+                />
               </Show>
 
               <Show when={cachedListing()?.files.length}>
-                <Files listing={listing} ref={filesTable} />
+                <Files listing={cachedListing} ref={filesTable} />
               </Show>
             </Match>
           </Switch>
