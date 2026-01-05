@@ -1,6 +1,10 @@
 # S3 Bucket Listing
 
-Provides a nice directory listing for some public S3 buckets. [Here's an example](https://public.nikhil.io).
+Provides a nice directory listing for some public S3 buckets I have. [Here's an example](https://public.nikhil.io). Download the latest build via:
+
+```bash
+wget https://public.nikhil.io/index.html
+```
 
 ## Development
 
@@ -31,7 +35,7 @@ Copy `index.html` to some bucket and configure `index.json`. Here's the bare, re
 }
 ```
 
-Here's a full example. It loads objects from a prefix other than the root prefix, is deployed at a prefix other than the root, and customizes colors and images.
+Here's a full example. It loads objects from a prefix other than the root prefix, is deployed at a prefix other than the root, and customizes colors, images, and the page title.
 
 ```json
 {
@@ -42,14 +46,15 @@ Here's a full example. It loads objects from a prefix other than the root prefix
   "colorForeground": "white",
   "colorHighlight": "#336699",
   "colorHover": "#ff3300",
-  "favicon": "/favicon.png",
-  "ogImage": "/og-image.png",
+  "favicon": "/my-favicon.png", // Default is /favicon.ico
+  "ogImage": "/og-image.foobar.png", // Default is /og-image.png
   "deployDir": "list",
+  "pageTitle": "My Bucket"
 }
 ```
 
 - The `ignoreRegexes` should not contain `/` delimiters.
-- If you want to show the root prefix, set `prefix` to an empty string.
+- If you want to show the root prefix, set `prefix` to an empty string (i.e. `""`)
 - To deploy to a folder other than the bucket root, set `deployDir` (no trailing slashes).
 - `index.json` must be co-located with `index.html`
 - `prefix` needs to be an empty string if root. Must end in `/` if not.

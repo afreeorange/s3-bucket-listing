@@ -7,6 +7,5 @@
   "colorForeground": "#111",
   "colorHighlight": "red",
   "colorHover": "red",
-  "favicon": "/favicon.ico",
-  "ogImage": "/og-image.public.nikhil.io.png"
+  "pageTitle": "Nikhil's Public Files"
 }

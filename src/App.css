@@ -227,6 +227,10 @@ typical-message {
       color: var(--color-hover);
     }
   }
+
+  p {
+    @apply opacity-50;
+  }
 }
 
 footer {
