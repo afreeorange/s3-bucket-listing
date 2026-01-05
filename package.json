@@ -1,7 +1,7 @@
 {
   "name": "s3-bucket-listing",
   "private": true,
-  "version": "3.4.0",
+  "version": "3.4.1",
   "type": "module",
   "packageManager": "pnpm@10.24.0",
   "scripts": {

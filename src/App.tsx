@@ -112,7 +112,7 @@ const App = () => {
 
   return (
     <>
-      <Title>{config()?.bucket}</Title>
+      <Title>{config()?.pageTitle ?? config()?.bucket}</Title>
 
       <Show when={config()?.favicon}>
         <Link rel="favicon" href={config()?.favicon} />
@@ -121,6 +121,13 @@ const App = () => {
       <Show when={config()?.ogImage}>
         <Meta property="og:image" content={config()?.ogImage} />
       </Show>
+
+      <Meta
+        property="og:title"
+        content={config()?.pageTitle ?? config()?.bucket}
+      />
+
+      <Meta property="og:url" content={window.location.toString()} />
 
       <div
         classList={{
