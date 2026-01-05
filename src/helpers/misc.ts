@@ -48,7 +48,7 @@ export const inputListener = (
     currentTarget: { value: term },
   }: KeyboardEvent & { currentTarget: HTMLInputElement },
   listing: Resource<BucketListing | null>,
-  setListing: Setter<BucketListing | null | undefined>
+  setListing: Setter<BucketListing | null | undefined>,
 ): void => {
   const data = listing();
   if (!data) {

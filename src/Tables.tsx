@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Fuck it */
 import type { Accessor, Resource } from "solid-js";
-import type { BucketConfig, BucketListing } from "./helpers/listing";
 import humanSize from "./helpers/filesize";
+import type { BucketConfig, BucketListing } from "./helpers/listing";
 import { timeAgo } from "./helpers/time";
 
 export const Folders = ({

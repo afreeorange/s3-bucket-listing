@@ -34,7 +34,7 @@ const App = () => {
    * Location signal for hash-based routing
    */
   const [location, setLocation] = createSignal(
-    window.location.hash.slice(1) || "/"
+    window.location.hash.slice(1) || "/",
   );
 
   const handleHashChange = () => {
@@ -226,7 +226,7 @@ const App = () => {
                       placeholder={`search ${createCountString(listing)}`}
                       type="search"
                       onkeyup={(
-                        e: KeyboardEvent & { currentTarget: HTMLInputElement }
+                        e: KeyboardEvent & { currentTarget: HTMLInputElement },
                       ) => inputListener(e, listing, setCachedListing)}
                     />
                   </search-listing>
