@@ -7,6 +7,7 @@ import {
   createMemo,
   createResource,
   createSignal,
+  ErrorBoundary,
   Match,
   onCleanup,
   Show,
@@ -47,12 +48,20 @@ const App = () => {
   /**
    * Fetch config as a resource
    */
-  const [config] = createResource(fetchConfig);
+  const [configError, setConfigError] = createSignal<Error | null>(null);
+  const [config] = createResource(async () => {
+    try {
+      return await fetchConfig();
+    } catch (e) {
+      setConfigError(e as Error);
+      return null;
+    }
+  });
 
   // Log config errors
   createEffect(() => {
-    if (config.error) {
-      console.error("Config error:", config.error?.message ?? config.error);
+    if (configError()) {
+      console.error("Config error:", configError()?.message);
     }
   });
 
@@ -102,7 +111,7 @@ const App = () => {
    * Derived loading/error states
    */
   const isLoading = () => config.loading || listing.loading;
-  const hasError = () => config.error || listing.error;
+  const hasError = () => configError() || listing.error;
 
   /**
    * Table sorting
@@ -169,6 +178,7 @@ const App = () => {
             <Match when={hasError()}>
               <typical-message>
                 <h2>Something terrible happened. Sorry.</h2>
+                {/* <p>{configError()?.message || listing.error?.message}</p> */}
               </typical-message>
             </Match>
 

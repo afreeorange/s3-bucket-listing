@@ -105,11 +105,12 @@ export const fetchConfig = async () => {
     throw new Error("Could not fetch configuration.");
   }
 
+  // Try to parse as JSON
   try {
     config = await req.json();
   } catch (e) {
     throw new Error(
-      `Error parsing configuration: is it valid JSON? Error: ${e}`
+      `Error parsing bucket configuration. Is it valid JSON? Error: ${e}`
     );
   }
 

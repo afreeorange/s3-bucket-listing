@@ -1,6 +1,6 @@
 {
-  "bucket": "public.nikhil.io",
-  "prefix": "",
+  "bucket": "lol.nikhil.io",
+  "prefix": "lolz/",
   "deployDir": "",
   "ignoreRegexes": ["favicon\\.*"],
   "favicon": "/favicon.ico",
