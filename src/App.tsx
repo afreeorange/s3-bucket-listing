@@ -85,7 +85,7 @@ const App = () => {
 
   // Filtered listing based on search term
   const cachedListing = createMemo(() =>
-    filterListing(searchTerm(), listing())
+    filterListing(searchTerm(), listing()),
   );
 
   /**

@@ -45,7 +45,7 @@ export const getFragmentPaths = () => {
 
 export const filterListing = (
   term: string,
-  listing: BucketListing | null | undefined
+  listing: BucketListing | null | undefined,
 ): BucketListing | null => {
   if (!listing) {
     return null;
@@ -61,7 +61,7 @@ export const filterListing = (
     ...listing,
     files: listing.files.filter((f) => f.name.toLowerCase().includes(_term)),
     folders: listing.folders.filter((f) =>
-      f.name.toLowerCase().includes(_term)
+      f.name.toLowerCase().includes(_term),
     ),
   };
 };
