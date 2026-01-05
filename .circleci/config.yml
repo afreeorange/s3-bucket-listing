@@ -35,6 +35,9 @@ jobs:
             - .pnpm-store
 
       # ----------------------- Start Tasks -----------------------
+      - run:
+          name: Checking code
+          command: pnpm check
 
       - run:
           name: Building the site
