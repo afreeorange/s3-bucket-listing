@@ -2,41 +2,82 @@
 
 Provides a nice directory listing for some public S3 buckets. [Here's an example](https://public.nikhil.io).
 
-## Usage
-
-Look in `configs` and create a similar configuration (and remove the others.) To add an OpenGraph image for nice previews, see `assets/` for an editable [Acorn](https://flyingmeat.com/acorn/) version. See `src/` for CSS you can customize. It's all very simple 🤗
-
 ## Development
-
-You will need [ParcelJS](https://parceljs.org/) and Node v18.
 
 ```bash
 # Install dependencies
-yarn
+pnpm i
 
-# Start development server. This will use `configs/env.local`
-yarn start
+# Start dev server
+pnpm dev
 
-# Build the local project
-yarn build:local
+# Check and Fix
+pnpm check
+pnpm fix
 
-# Build all projects prefixed with `env` in `configs`
-yarn build:all
-
-# Clean all builds
-yarn clean
+# Build. Deployable is dist/index.html
+pnpm build
 ```
+
+## Deployment
+
+Copy `index.html` to some bucket and configure `index.json`. Here's the bare, required config:
+
+```json
+{
+  "bucket": "foo.nikhil.io",
+  "prefix": "",
+  "ignoreRegexes": []
+}
+```
+
+Here's a full example. It loads objects from a prefix other than the root prefix, is deployed at a prefix other than the root, and customizes colors and images.
+
+```json
+{
+  "bucket": "foo.nikhil.io",
+  "prefix": "things/",
+  "ignoreRegexes": [],
+  "colorBackground": "darkblue",
+  "colorForeground": "white",
+  "colorHighlight": "#336699",
+  "colorHover": "#ff3300",
+  "favicon": "/favicon.png",
+  "ogImage": "/og-image.png",
+  "deployDir": "list",
+}
+```
+
+- The `ignoreRegexes` should not contain `/` delimiters.
+- If you want to show the root prefix, set `prefix` to an empty string.
+- To deploy to a folder other than the bucket root, set `deployDir` (no trailing slashes).
+- `index.json` must be co-located with `index.html`
+- `prefix` needs to be an empty string if root. Must end in `/` if not.
 
 ### TODO
 
-* [ ] Proper typing and comments
-* [ ] "Directory" nodes must be alphabetized (and intelligently)
-* [ ] Parcel output [must not have hashes](https://github.com/parcel-bundler/parcel/issues/5894) (or have a filename that can be excluded)
-* [ ] Fix table sorting
-* [x] Support initial prefix
-* [x] Support installing in a prefix (not just the root prefix)
-* [x] Fix input corners on mobile 🤦‍♀️
-* [x] Footer with link to project
-* [ ] PostHTML expressions for env var interpolation: title and description
-* [ ] `index\..*\.(js|css|png|config|json).*` exclusion only at root
-* [ ] `<thead>`ings for responsive stuff
+- [ ] Debounce?
+- [x] Errors
+- [x] Loading
+- [x] `grep -v` for listing
+- [x] 404
+- [x] Customizable colors
+- [x] Deal with truncated listings. You always get 1,000 keys.
+- [x] Favicon
+- [x] Filter/Search
+- [x] OG Image
+- [x] Responsive
+- [x] Segments
+- [x] Sort
+- [x] Track changes to routes
+
+## References, Resources
+
+- [Tailwind Colors](https://tailwindcss.com/docs/colors)
+- [S3 ListObjects Request Syntax](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html#API_ListObjects_RequestSyntax)
+- [IBM Workplace Design](https://www.ibm.com/design/workplace/interior-architecture/color/)
+- [Awesome SolidJS](https://github.com/one-aalam/awesome-solid-js?tab=readme-ov-file#helpers)
+
+## License
+
+MIT

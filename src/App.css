@@ -1,0 +1,252 @@
+/** biome-ignore-all lint/correctness/noUnknownFunction: Using PostCSS */
+
+@import "tailwindcss";
+@import "./fonts.css";
+
+:root {
+  --font-monospace: "Google Code Variable", monospace;
+  --color-background: #002d9c;
+  --color-foreground: #fff;
+  --color-highlight: #3876f4;
+  --color-hover: #ff9900;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+html,
+body {
+  font-family: var(--font-monospace);
+  @apply overflow-x-hidden lg:text-lg;
+}
+
+.wrapper {
+  @apply w-full min-h-screen;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+a {
+  @apply transition-all;
+
+  &:hover {
+    color: var(--color-hover);
+  }
+}
+
+header {
+  @apply p-2;
+
+  h1 {
+    @apply text-xl wrap-break-word;
+
+    a {
+      &:first-of-type {
+        @apply font-bold;
+      }
+    }
+
+    em {
+      @apply mx-2;
+      color: var(--color-highlight);
+    }
+
+    listing-loading {
+      @apply inline-block text-2xl;
+      color: var(--color-highlight);
+
+      &::after {
+        @apply inline-block bg-current ml-2 w-8 h-8;
+
+        content: "\0a0";
+        mask-image: svg-load("./img/spiral.svg");
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: cover;
+        animation: spinner 1s linear infinite;
+      }
+    }
+  }
+
+  h2 {
+    @apply items-center text-xl;
+
+    span {
+      @apply font-bold;
+    }
+  }
+}
+
+truncated-listing {
+  @apply px-2;
+
+  &::before {
+    @apply inline-block bg-current mr-2 w-4 h-4 leading-4;
+    color: var(--color-highlight);
+
+    content: "\0a0";
+    mask-image: svg-load("./img/warning.svg");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: cover;
+  }
+}
+
+search-listing {
+  @apply block p-2;
+
+  input[type="search"] {
+    @apply my-4 px-2 py-2 border rounded-sm w-full;
+    border-color: var(--color-highlight);
+  }
+
+  ::placeholder {
+    color: var(--color-highlight);
+    opacity: 1;
+  }
+}
+
+table {
+  @apply w-full table-fixed;
+
+  th {
+    color: var(--color-highlight);
+
+    &:hover {
+      color: var(--color-hover);
+    }
+  }
+
+  * > tr > * {
+    @apply px-2 py-1;
+  }
+
+  tr {
+    th:first-of-type,
+    td:first-of-type {
+      @apply text-left;
+    }
+
+    th:not(:first-of-type),
+    td:not(:first-of-type) {
+      @apply text-right;
+    }
+  }
+
+  tr:not(:last-of-type) :where(td, th) {
+    @apply border-b border-dotted;
+    border-color: var(--color-highlight);
+  }
+
+  td {
+    @apply align-top;
+  }
+}
+
+table[data-listing="folders"] {
+  @apply mb-8;
+}
+
+table[data-listing="files"] {
+  font-weight: 100;
+
+  th {
+    @apply font-bold;
+
+    &:hover {
+      @apply cursor-pointer;
+    }
+
+    &[aria-sort]::before {
+      @apply inline-block bg-current mr-1 w-4 h-4;
+      color: var(--color-highlight);
+      content: "\0a0";
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: cover;
+    }
+
+    &[aria-sort="ascending"]::before {
+      mask-image: svg-load("./img/arrow-up.svg");
+    }
+
+    &[aria-sort="descending"]::before {
+      @apply leading-2;
+      mask-image: svg-load("./img/arrow-down.svg");
+    }
+  }
+
+  *[data-label="name"] {
+    span {
+      @apply line-clamp-1;
+    }
+  }
+
+  *[data-label="last-modified"] {
+    @apply hidden lg:table-cell w-130;
+  }
+
+  *[data-label="size"] {
+    @apply hidden lg:table-cell w-24;
+  }
+
+  td[data-label="size"] {
+    @apply opacity-75;
+  }
+
+  *[data-label="short-summary"] {
+    @apply lg:hidden w-32;
+  }
+
+  td[data-label="short-summary"] {
+    @apply opacity-65;
+  }
+
+  td[data-label="last-modified"] {
+    span {
+      @apply opacity-75 mr-4;
+    }
+
+    time {
+      @apply opacity-50;
+    }
+  }
+}
+
+typical-message {
+  @apply block px-2;
+
+  a {
+    @apply underline underline-offset-4;
+
+    &:hover {
+      color: var(--color-hover);
+    }
+  }
+}
+
+footer {
+  @apply px-2 py-12 text-right;
+
+  a {
+    @apply opacity-25;
+
+    &:hover {
+      @apply opacity-100;
+      color: var(--color-hover);
+    }
+
+    span::after {
+      @apply inline-block bg-current ml-2 w-4 h-4 leading-4;
+
+      content: "\0a0";
+      mask-image: svg-load("./img/github.svg");
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: cover;
+    }
+  }
+}

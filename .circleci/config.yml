@@ -1,34 +1,76 @@
 version: 2.1
 
+orbs:
+  # https://circleci.com/developer/orbs/orb/circleci/aws-s3
+  aws-s3: circleci/aws-s3@2.0.0
+
 jobs:
-  build:
+  deploy-job:
     docker:
-      - image: afreeorange/build:latest
+      # This is their "Next Generation" image
+      # https://circleci.com/developer/images/image/cimg/node
+      - image: cimg/node:24.2.0
 
     steps:
+      # https://pnpm.io/continuous-integration#circleci
       - checkout
-
       - restore_cache:
-          name: 🗃 Restoring package cache
+          name: Restoring package cache
           keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
-          name: ⏳ Installing dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-
+          name: Install pnpm package manager
+          command: |
+            sudo corepack enable
+            sudo COREPACK_INTEGRITY_KEYS=0 corepack prepare --activate
+            pnpm config set store-dir .pnpm-store
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
       - save_cache:
-          name: 💾 Saving package cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Saving Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
-            - ~/.cache/yarn
+            - .pnpm-store
+
+      # ----------------------- Start Tasks -----------------------
 
       - run:
-          name: 👷‍♀️ Building
-          command:
-            yarn build:all
+          name: Building the site
+          command: pnpm build
 
-      - run:
-          name: ☁️ Deploying to destinations in `configs`
-          command:
-            yarn deploy
+      # Notes:
+      # 1) You have to set the aws-* config params.
+      # 2) The sync flags should match `_scripts/push.sh`
+      - aws-s3/sync:
+          aws-region: AWS_DEFAULT_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          from: dist/
+          to: "s3://public.nikhil.io/"
+
+      - aws-s3/sync:
+          aws-region: AWS_DEFAULT_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          from: dist/
+          to: "s3://lol.nikhil.io/"
+
+      - aws-s3/sync:
+          aws-region: AWS_DEFAULT_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          from: dist/
+          to: "s3://reports.nikhil.io/"
+
+workflows:
+  version: 2.1
+  main:
+    jobs:
+      - deploy-job:
+          # Don't care about running the above for anything other than pushes
+          # to the master branch 🤷‍♂️
+          filters:
+            branches:
+              only: master
