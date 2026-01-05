@@ -46,6 +46,7 @@ header {
     a {
       &:first-of-type {
         @apply font-bold;
+        color: var(--color-highlight);
       }
     }
 
@@ -151,7 +152,7 @@ table[data-listing="folders"] {
 }
 
 table[data-listing="files"] {
-  font-weight: 100;
+  font-weight: 400;
 
   th {
     @apply font-bold;

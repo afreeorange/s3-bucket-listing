@@ -1,8 +1,12 @@
 {
-  "bucket": "lol.nikhil.io",
-  "prefix": "lolz/",
+  "bucket": "public.nikhil.io",
+  "prefix": "",
   "deployDir": "",
   "ignoreRegexes": ["favicon\\.*"],
+  "colorBackground": "oklch(79.5% 0.184 86.047)",
+  "colorForeground": "#111",
+  "colorHighlight": "red",
+  "colorHover": "red",
   "favicon": "/favicon.ico",
   "ogImage": "/og-image.png"
 }
