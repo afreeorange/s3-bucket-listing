@@ -7,7 +7,6 @@ import {
   createMemo,
   createResource,
   createSignal,
-  ErrorBoundary,
   Match,
   onCleanup,
   Show,
