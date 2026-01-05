@@ -58,7 +58,7 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: dist/
-          to: "s3://lol.nikhil.io/"
+          to: "s3://lol.nikhil.io/lolz/"
 
       - aws-s3/sync:
           aws-region: AWS_DEFAULT_REGION
