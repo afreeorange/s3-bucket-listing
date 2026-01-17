@@ -29,7 +29,7 @@ export const timeAgo = (date: Date, compressed: boolean = false): string => {
   }
 
   if (intervalsElapsed === 0) {
-    return "Just now";
+    return "Now";
   }
 
   if (compressed) {
